@@ -10,9 +10,9 @@ Just place [`libcjson.lua`](https://github.com/bungle/lua-resty-libcjson/blob/ma
 
 These are just rudimentary notes. Better installation instructions will follow:
 
-1. First download cJSON (zip-file) from here: http://sourceforge.net/projects/cjson/files/latest/download
+1. First clone this repo: https://github.com/kbranigan/cJSON (or download cJSON (zip-file) from here: http://sourceforge.net/projects/cjson/files/latest/download)
 2. Unzip / Extract the archive
-3. Run `gcc cJSON.c -o libcjson.so -shared -fPIC` (on Linux) or `gcc cJSON.c -o libcjson.dylib -shared` (OS X)
+3. Run `gcc cJSON.c -O3 -o libcjson.so -shared -fPIC` (on Linux) or `gcc cJSON.c -O3 -o libcjson.dylib -shared` (OS X)
 4. Place `libcjson.so` somewhere in the default search path for dynamic libraries of your operating system (or modify `libcjson.lua` and point `ffi_load "cjson"` with full path to `libcjson.so`, e.g. `local json = ffi_load("/usr/local/lib/lua/5.1/libcjson.so")`).
 
 ### Using LuaRocks or MoonRocks
@@ -87,12 +87,25 @@ Nested Lua tables are encoded as nested JSON structures (JSON objects or arrays)
 
 See this comment: https://github.com/bungle/lua-resty-libcjson/issues/1#issuecomment-38567447.
 
+## Benchmarks
+
+About 190 MB citylots.json:
+
+```bash
+# Lua cJSON
+Decoding Time: 5.882825
+Encoding Time: 4.902301
+# lua-resty-libcjson
+Decoding Time: 6.409872
+Encoding Time: (takes forever)
+```
+
 ## License
 
 `lua-resty-libcjson` uses two clause BSD license.
 
 ```
-Copyright (c) 2013, Aapo Talvensaari
+Copyright (c) 2014 - 2016, Aapo Talvensaari
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
